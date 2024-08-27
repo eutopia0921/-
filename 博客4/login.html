@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>登录与注册</title>
+    <style>
+        body {
+            font-family: 'Helvetica Neue', Arial, sans-serif;
+            background: #f4f4f4;
+            color: #333;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .container {
+            width: 90%;
+            max-width: 500px;
+            background: white;
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            margin-bottom: 1rem;
+            color: #222;
+        }
+        input {
+            width: 100%;
+            padding: 0.75rem;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            margin-bottom: 1rem;
+        }
+        button {
+            width: 100%;
+            padding: 0.75rem;
+            border: none;
+            background-color: #333;
+            color: white;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        button:hover {
+            background-color: #444;
+        }
+        .form-group {
+            margin-bottom: 1rem;
+        }
+        .message {
+            color: #e74c3c;
+            margin-bottom: 1rem;
+        }
+        .link {
+            text-align: center;
+        }
+        .link a {
+            color: #3498db;
+            text-decoration: none;
+        }
+        .link a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1 id="form-title">登录</h1>
+        <div class="message" id="message"></div>
+        <div id="login-form">
+            <input type="text" id="username" placeholder="用户名" required>
+            <input type="password" id="password" placeholder="密码" required>
+            <button onclick="login()">登录</button>
+            <div class="link">
+                <p>没有帐号？ <a href="#" onclick="showRegisterForm()">注册</a></p>
+            </div>
+        </div>
+        <div id="register-form" style="display: none;">
+            <input type="text" id="nickname" placeholder="昵称" required>
+            <input type="text" id="reg-username" placeholder="用户名" required>
+            <input type="password" id="reg-password" placeholder="密码" required>
+            <button onclick="register()">注册</button>
+            <div class="link">
+                <p>已有帐号？ <a href="#" onclick="showLoginForm()">登录</a></p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // 模拟的用户数据
+        const adminCredentials = { username: "admin", password: "admin123" };
+        const users = []; // 存储用户数据
+
+        function login() {
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+            const message = document.getElementById('message');
+            message.innerText = '';
+
+            if (username === adminCredentials.username && password === adminCredentials.password) {
+                // 管理员登录成功
+                window.location.href = 'admin-dashboard.html';
+            } else {
+                const user = users.find(user => user.username === username && user.password === password);
+                if (user) {
+                    // 游客登录成功
+                    window.location.href = 'index.html';
+                } else {
+                    message.innerText = '用户名或密码错误';
+                }
+            }
+        }
+
+        function register() {
+            const nickname = document.getElementById('nickname').value;
+            const username = document.getElementById('reg-username').value;
+            const password = document.getElementById('reg-password').value;
+            const message = document.getElementById('message');
+            message.innerText = '';
+
+            if (users.some(user => user.username === username)) {
+                message.innerText = '用户名已存在';
+                return;
+            }
+
+            users.push({
+                nickname: nickname,
+                username: username,
+                password: password,
+                avatar: 'https://via.placeholder.com/40?text=游客' // 默认头像
+            });
+
+            alert('注册成功，请登录');
+            showLoginForm();
+        }
+
+        function showRegisterForm() {
+            document.getElementById('form-title').innerText = '注册';
+            document.getElementById('login-form').style.display = 'none';
+            document.getElementById('register-form').style.display = 'block';
+        }
+
+        function showLoginForm() {
+            document.getElementById('form-title').innerText = '登录';
+            document.getElementById('login-form').style.display = 'block';
+            document.getElementById('register-form').style.display = 'none';
+        }
+    </script>
+</body>
+</html>

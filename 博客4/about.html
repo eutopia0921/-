@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>关于我</title>
+    <style>
+        body {
+            font-family: 'Helvetica Neue', Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background: #f9f9f9;
+            color: #333;
+            line-height: 1.6;
+        }
+        header {
+            background: rgba(0, 0, 0, 0.8);
+            color: white;
+            padding: 1rem 0;
+            position: fixed;
+            width: 100%;
+            top: -50px; /* 调整导航栏向上移动 */
+            left: 0;
+            z-index: 1000;
+        }
+        .container {
+            width: 80%;
+            max-width: 1200px;
+            margin: auto;
+            padding-top: 80px; /* Adjust for fixed header */
+        }
+        .nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 2rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+        }
+        .nav a {
+            color: white;
+            text-decoration: none;
+            padding: 0.5rem 1rem;
+            border-radius: 5px;
+            transition: background-color 0.3s, color 0.3s;
+        }
+        .nav a:hover {
+            background-color: rgba(255, 255, 255, 0.2);
+            color: #f0f0f0;
+        }
+        .profile {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            background: white;
+            border-radius: 10px;
+            padding: 2rem;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+            margin-top: 3rem; /* Adjust margin-top to provide space below the fixed header */
+            text-align: center;
+        }
+        .profile img {
+            border-radius: 50%;
+            width: 150px;
+            height: 150px;
+            object-fit: cover;
+            margin-bottom: 1rem;
+        }
+        .profile h1 {
+            margin: 0.5rem 0;
+            font-size: 2rem;
+            color: #333;
+        }
+        .profile p {
+            margin: 0.5rem 0;
+            color: #666;
+        }
+        .tags {
+            margin: 2rem 0;
+            text-align: center;
+        }
+        .tags h2 {
+            margin-bottom: 1rem;
+            font-size: 1.5rem;
+            color: #333;
+        }
+        .tag {
+            display: inline-block;
+            background: #e0e0e0;
+            color: #333;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            margin: 0.5rem;
+            font-size: 1rem;
+            transition: background 0.3s, color 0.3s;
+        }
+        .tag:hover {
+            background: #333;
+            color: white;
+        }
+        .tag input {
+            display: none;
+        }
+        .tag label {
+            cursor: pointer;
+        }
+        .tag input:checked + label {
+            background: #333;
+            color: white;
+        }
+        .add-tag {
+            margin: 2rem auto;
+            text-align: center;
+        }
+        .add-tag input {
+            padding: 0.5rem;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            width: 200px;
+            font-size: 1rem;
+        }
+        .add-tag button {
+            padding: 0.5rem 1rem;
+            border: none;
+            background-color: #333;
+            color: white;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-left: 1rem;
+            font-size: 1rem;
+            transition: background-color 0.3s;
+        }
+        .add-tag button:hover {
+            background-color: #444;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div class="nav">
+                <a href="index.html">首页</a>
+                <a href="categories.html">文章</a>
+                <a href="about.html">关于我</a>
+                <a href="login.html">登录</a>
+            </div>
+        </div>
+    </header>
+
+    <div class="container">
+        <!-- 个人信息模块 -->
+        <div class="profile">
+            <img src="https://via.placeholder.com/150" alt="个人头像">
+            <h1>张三</h1>
+            <p>前端开发者 | 博客作者</p>
+            <p>热爱编程和写作，喜欢分享技术经验和学习资源。</p>
+        </div>
+
+        <!-- 爱好标签 -->
+        <div class="tags">
+            <h2>我的爱好</h2>
+            <div id="tag-container">
+                <!-- 这里的标签会通过JavaScript动态填充 -->
+                <div class="tag"><input type="checkbox" id="tag1"><label for="tag1">编程</label></div>
+                <div class="tag"><input type="checkbox" id="tag2"><label for="tag2">阅读</label></div>
+                <div class="tag"><input type="checkbox" id="tag3"><label for="tag3">旅行</label></div>
+            </div>
+        </div>
+
+        <!-- 添加标签 -->
+        <div class="add-tag">
+            <input type="text" id="new-tag" placeholder="输入新的标签">
+            <button onclick="addTag()">添加标签</button>
+        </div>
+    </div>
+
+    <script>
+        function addTag() {
+            const newTag = document.getElementById('new-tag').value.trim();
+            if (newTag) {
+                const tagContainer = document.getElementById('tag-container');
+                const tagDiv = document.createElement('div');
+                tagDiv.className = 'tag';
+                const tagId = `tag${tagContainer.children.length + 1}`;
+                tagDiv.innerHTML = `<input type="checkbox" id="${tagId}"><label for="${tagId}">${newTag}</label>`;
+                tagContainer.appendChild(tagDiv);
+                document.getElementById('new-tag').value = '';
+            }
+        }
+    </script>
+</body>
+</html>
